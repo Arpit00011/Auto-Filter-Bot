@@ -6,7 +6,7 @@ shortzy
 datetime 
 pytz 
 aiohttp
-yt-dlp
+yt-dlp==2023.11.16
 youtube-dl
 requests
 ytthumb
