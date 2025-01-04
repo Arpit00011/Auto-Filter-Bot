@@ -63,8 +63,8 @@ class Database:
         self.grp = self.db.groups
         self.users = self.db.uersz
         self.bot = self.db.clone_bots
-        self.movies_update_channel = self.movies_update_channel
-        self.update_post_mode = self.update_post_mode
+        self.movies_update_channel = mydb.movies_update_channel
+        self.update_post_mode = mydb.update_post_mode
 
 
     def new_user(self, id, name):
