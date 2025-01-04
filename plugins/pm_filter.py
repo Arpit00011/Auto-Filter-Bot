@@ -2750,6 +2750,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup = InlineKeyboardMarkup(buttons)
             await query.message.edit_reply_markup(reply_markup)
     await query.answer(MSG_ALRT)
+    return
 
     elif query.data.startswith("update_post_mode"):
         await query.answer('Please Choose From The Given Options.', show_alert=True)
