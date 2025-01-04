@@ -2,7 +2,8 @@ import re
 from pymongo.errors import DuplicateKeyError
 import motor.motor_asyncio
 from pymongo import MongoClient
-from info import DATABASE_NAME, DATABASE_URI, CUSTOM_FILE_CAPTION, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, DEFAULT_POST_MODE
+from sample_info import tempDict
+from info import DATABASE_NAME, DATABASE_URI, CUSTOM_FILE_CAPTION, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, SECONDDB_URI, DEFAULT_POST_MODE
 import time
 import datetime
 
@@ -56,8 +57,9 @@ class Database:
         'is_tutorial': IS_TUTORIAL,
     }
     
-    def __init__(self, uri, database_name):
-        self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
+    def __init__(self, database_name):
+        #primary db 
+        self._client = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URI)
         self.db = self._client[database_name]
         self.col = self.db.users
         self.grp = self.db.groups
@@ -65,6 +67,11 @@ class Database:
         self.bot = self.db.clone_bots
         self.movies_update_channel = mydb.movies_update_channel
         self.update_post_mode = mydb.update_post_mode
+        #secondary db
+        self._client2 = motor.motor_asyncio.AsyncIOMotorClient(SECONDDB_URI)
+        self.db2 = self._client2[database_name]
+        self.col2 = self.db2.users
+        self.grp2 = self.db2.groups
 
 
     def new_user(self, id, name):
@@ -95,14 +102,20 @@ class Database:
     
     async def add_user(self, id, name):
         user = self.new_user(id, name)
-        await self.col.insert_one(user)
+        print(f"tempDict: {tempDict['indexDB']}\n\nDATABASE_URI: {DATABASE_URI}")
+        if tempDict['indexDB'] == DATABASE_URI:
+            await self.col.insert_one(user)
+        else:
+            await self.col2.insert_one(user)
     
     async def is_user_exist(self, id):
         user = await self.col.find_one({'id':int(id)})
+        if not user:
+            user = await self.col2.find_one({'id':int(id)})
         return bool(user)
     
     async def total_users_count(self):
-        count = await self.col.count_documents({})
+        count = ((await self.col.count_documents({}))+(await self.col2.count_documents({})))
         return count
 
     async def add_clone_bot(self, bot_id, user_id, bot_token):
@@ -146,14 +159,22 @@ class Database:
             is_banned=False,
             ban_reason=''
         )
-        await self.col.update_one({'id': id}, {'$set': {'ban_status': ban_status}})
+        user = await self.col.find_one({'id': int(id)})
+        if not user:
+            await self.col2.update_one({'id': id}, {'$set': {'ban_status': ban_status}})
+        else:
+            await self.col.update_one({'id': id}, {'$set': {'ban_status': ban_status}})
     
     async def ban_user(self, user_id, ban_reason="No Reason"):
         ban_status = dict(
             is_banned=True,
             ban_reason=ban_reason
         )
-        await self.col.update_one({'id': user_id}, {'$set': {'ban_status': ban_status}})
+        user = await self.col.find_one({'id': int(user_id)})
+        if not user:
+            await self.col2.update_one({'id': user_id}, {'$set': {'ban_status': ban_status}})
+        else:
+            await self.col.update_one({'id': user_id}, {'$set': {'ban_status': ban_status}})
 
     async def get_ban_status(self, id):
         default = dict(
@@ -162,15 +183,22 @@ class Database:
         )
         user = await self.col.find_one({'id':int(id)})
         if not user:
-            return default
+            user = await self.col2.find_one({'id':int(id)})
+            if not user:
+                return default
         return user.get('ban_status', default)
 
     async def get_all_users(self):
-        return self.col.find({})
+        users_list = (await (self.col.find({})).to_list(length=None))+(await (self.col2.find({})).to_list(length=None))
+        return users_list
     
 
     async def delete_user(self, user_id):
-        await self.col.delete_many({'id': int(user_id)})
+        user = await self.col.find_one({'id': int(user_id)})
+        if user:
+            await self.col.delete_many({'id': int(user_id)})
+        else:
+            await self.col2.delete_many({'id': int(user_id)})
 
 
     async def get_banned(self):
@@ -178,17 +206,27 @@ class Database:
         chats = self.grp.find({'chat_status.is_disabled': True})
         b_chats = [chat['id'] async for chat in chats]
         b_users = [user['id'] async for user in users]
+        users = self.col2.find({'ban_status.is_banned': True})
+        chats = self.grp2.find({'chat_status.is_disabled': True})
+        b_chats += [chat['id'] async for chat in chats]
+        b_users += [user['id'] async for user in users]
         return b_users, b_chats
     
 
 
     async def add_chat(self, chat, title):
         chat = self.new_group(chat, title)
-        await self.grp.insert_one(chat)
+        print(f"tempDict: {tempDict['indexDB']}\n\nDATABASE_URI: {DATABASE_URI}")
+        if tempDict['indexDB'] == DATABASE_URI:
+            await self.grp.insert_one(chat)
+        else:
+            await self.grp2.insert_one(chat)
     
 
-    async def get_chat(self, chat):
-        chat = await self.grp.find_one({'id':int(chat)})
+    async def get_chat(self, id):
+        chat = await self.grp.find_one({'id':int(id)})
+        if not chat:
+            chat = await self.grp2.find_one({'id':int(id)})
         return False if not chat else chat.get('chat_status')
     
 
@@ -197,16 +235,28 @@ class Database:
             is_disabled=False,
             reason="",
             )
-        await self.grp.update_one({'id': int(id)}, {'$set': {'chat_status': chat_status}})
+        chat = await self.grp.find_one({'id':int(id)})
+        if chat:
+            await self.grp.update_one({'id': int(id)}, {'$set': {'chat_status': chat_status}})
+        else:
+            await self.grp2.update_one({'id': int(id)}, {'$set': {'chat_status': chat_status}})
         
     async def update_settings(self, id, settings):
-        await self.grp.update_one({'id': int(id)}, {'$set': {'settings': settings}})
+        chat = await self.grp.find_one({'id':int(id)})
+        if chat:
+            await self.grp.update_one({'id': int(id)}, {'$set': {'settings': settings}})
+        else:
+            await self.grp2.update_one({'id': int(id)}, {'$set': {'settings': settings}})
         
     
     async def get_settings(self, id):
         chat = await self.grp.find_one({'id':int(id)})
         if chat:
             return chat.get('settings', self.default_setgs)
+        else:
+            chat = await self.grp2.find_one({'id':int(id)})
+            if chat:
+                return chat.get('settings', default)
         return self.default_setgs
     
 
@@ -215,20 +265,20 @@ class Database:
             is_disabled=True,
             reason=reason,
             )
-        await self.grp.update_one({'id': int(chat)}, {'$set': {'chat_status': chat_status}})
+        chat = await self.grp.find_one({'id':int(chat)})
+        if chat:
+            await self.grp.update_one({'id': int(chat)}, {'$set': {'chat_status': chat_status}})
+        else:
+            await self.grp2.update_one({'id': int(chat)}, {'$set': {'chat_status': chat_status}})
     
 
     async def total_chat_count(self):
-        count = await self.grp.count_documents({})
+        count = (await self.grp.count_documents({}))+(await self.grp2.count_documents({}))
         return count
     
 
     async def get_all_chats(self):
-        return self.grp.find({})
-
-
-    async def get_db_size(self):
-        return (await self.db.command("dbstats"))['dataSize']
+        return ((await (self.grp.find({})).to_list(length=None))+(await (self.grp2.find({})).to_list(length=None)))
 
     async def get_user(self, user_id):
         user_data = await self.users.find_one({"id": user_id})
@@ -338,4 +388,4 @@ class Database:
         
         return post_mode
 
-db = Database(DATABASE_URI, DATABASE_NAME)
+db = Database(DATABASE_NAME)
