@@ -146,9 +146,9 @@ Cᴏᴍᴍᴀɴᴅs Aɴᴅ Usᴀɢᴇ:
 • /request - <code>Tᴏ sᴇɴᴅ ᴀ Mᴏᴠɪᴇ/Sᴇʀɪᴇs ʀᴇᴏ̨ᴜᴇsᴛ ᴛᴏ ʙᴏᴛ ᴀᴅᴍɪɴs. Oɴʟʏ ᴡᴏʀᴋs ᴏɴ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ. [Tʜɪs Cᴏᴍᴍᴀɴᴅ Cᴀɴ Bᴇ Usᴇᴅ Bʏ Aɴʏᴏɴᴇ]</code>
 • /delallg - <code>Tᴏ ᴅᴇʟᴇᴛᴇ ᴀʟʟ Gғɪʟᴛᴇʀs ғʀᴏᴍ ᴛʜᴇ ʙᴏᴛ's ᴅᴀᴛᴀʙᴀsᴇ.</code>
 • /deletefiles - <code>Tᴏ ᴅᴇʟᴇᴛᴇ CᴀᴍRɪᴘ ᴀɴᴅ PʀᴇDVD Fɪʟᴇs ғʀᴏᴍ ᴛʜᴇ ʙᴏᴛ's ᴅᴀᴛᴀʙᴀsᴇ.</code>
-• /set_muc - <code>ᴛᴏ sᴇᴛ ᴍᴏᴠɪᴇ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀᴛ ɪᴅ</code>
-• /del_muc - <code>ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴍᴏᴠɪᴇ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀᴛ ɪᴅ</code>
-• /post_mode - <code>ᴛᴏ sᴇᴛ ᴘᴏsᴛ ᴍᴏᴅᴇ ғᴏʀ Mᴏᴠɪᴇs Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ</code> """
+• /set_muc - <code>ᴛᴏ sᴇᴛ ᴍᴏᴠɪᴇ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀᴛ ɪᴅ.</code>
+• /del_muc - <code>ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴍᴏᴠɪᴇ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀᴛ ɪᴅ.</code>
+• /post_mode - <code>ᴛᴏ sᴇᴛ ᴘᴏsᴛ ᴍᴏᴅᴇ ғᴏʀ Mᴏᴠɪᴇs Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ.</code>"""
 
     STATUS_TXT = """<b>Tᴏᴛᴀʟ Fɪʟᴇs Fʀᴏᴍ Bᴏᴛʜ DBs: <code>{}</code></blockquote>
 
