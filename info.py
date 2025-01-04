@@ -24,6 +24,7 @@ BOT_TOKEN = environ.get('BOT_TOKEN', "")
 # Bot settings
 CACHE_TIME = int(environ.get('CACHE_TIME', 1800))
 PICS = (environ.get('PICS', 'https://graph.org/file/d643b6574c1ffcac4cffd.jpg https://graph.org/file/78fa060f516147718b4d1.jpg https://graph.org/file/012b6d30c8cac09ea3e06.jpg https://graph.org/file/f531e6e0927884bbcd698.jpg https://graph.org/file/67001dbf4f98b8b2b4eee.jpg https://graph.org/file/ca9474488631646ff9503.jpg https://graph.org/file/7255cc48b00b20293008c.jpg https://graph.org/file/1133ec9f62c1b3aad6865.jpg')).split() #SAMPLE PIC
+START_IMG = environ.get('START_IMG', 'https://graph.org/file/012b6d30c8cac09ea3e06.jpg')
 NOR_IMG = environ.get("NOR_IMG", "https://graph.org/file/b69af2db776e4e85d21ec.jpg")
 MELCOW_VID = environ.get("MELCOW_VID", "https://t.me/How_To_Open_Linkl")
 SPELL_IMG = environ.get("SPELL_IMG", "https://te.legra.ph/file/15c1ad448dfe472a5cbb8.jpg")
@@ -34,6 +35,7 @@ ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1002075429339 -1002145382878 -1001934525883 -1002039117054 -1002004849968 -1002073480988 -1002087386412 -1002121649557 -1001584064219 -1001749313075 -1002038633493 -1002137528664 -1002077178570 -1002029547741 -1002077178570 -1001613574728 -1002048583251 -1001482631371 -1002019402843 -1002019646585 -1002199963727 -1002148773240 -1001972977023 -1001942558541 -1002083199283 -1001972977023 -1001942558541 -1002083199283 -1001658823824 -1001116179493 -1002137528664 -1001609906203 -1001925233125 -1002094057193 -1002020242463 -1002079712359  -1002165297790 -1002158385438 -1002026546209 -1002228043698 -1001836124367 AV1world -1002101938265 -1002218808599 -1002004346552 -1001359686523 -1002004346552 -1002177674758 -1002233567861 -1002239734551 -1002196649548 -1002004346552 -1002126324229 -1001992468069 -1002090255299 -1001416240381 -1002048469984 -1002070431155 -1001756564118 -1002454842046').split()]
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
+MOVIE_UPDATE_CHANNEL = int(environ.get('MOVIE_UPDATE_CHANNEL', '-1002189352128'))
 
 # auth_channel means force subscribe channel.
 # if REQUEST_TO_JOIN_MODE is true then force subscribe work like request to join fsub, else if false then work like normal fsub.
@@ -161,6 +163,12 @@ LOG_STR += ("Long IMDB storyline enabled." if LONG_IMDB_DESCRIPTION else "LONG_I
 LOG_STR += ("Spell Check Mode Is Enabled, bot will be suggesting related movies if movie not found\n" if SPELL_CHECK_REPLY else "SPELL_CHECK_REPLY Mode disabled\n")
 LOG_STR += (f"MAX_LIST_ELM Found, long list will be shortened to first {MAX_LIST_ELM} elements\n" if MAX_LIST_ELM else "Full List of casts and crew will be shown in imdb template, restrict them by adding a value to MAX_LIST_ELM\n")
 LOG_STR += f"Your current IMDB template is {IMDB_TEMPLATE}"
+
+
+DEFAULT_POST_MODE = {
+    'singel_post_mode' : False,
+    'all_files_post_mode' : False
+}
 
 
                           # Don't Remove Credit @Tonystark_botz

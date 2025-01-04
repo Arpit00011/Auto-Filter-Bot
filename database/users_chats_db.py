@@ -2,7 +2,7 @@ import re
 from pymongo.errors import DuplicateKeyError
 import motor.motor_asyncio
 from pymongo import MongoClient
-from info import DATABASE_NAME, DATABASE_URI, CUSTOM_FILE_CAPTION, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL
+from info import DATABASE_NAME, DATABASE_URI, CUSTOM_FILE_CAPTION, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, DEFAULT_POST_MODE
 import time
 import datetime
 
@@ -63,6 +63,8 @@ class Database:
         self.grp = self.db.groups
         self.users = self.db.uersz
         self.bot = self.db.clone_bots
+        self.movies_update_channel = mydb.movies_update_channel
+        self.update_post_mode = mydb.update_post_mode
 
 
     def new_user(self, id, name):
@@ -304,5 +306,36 @@ class Database:
         user = await self.col.find_one({'id': int(id)})
         return user.get('save', False) 
     
+    async def movies_update_channel_id(self , id=None):
+        if id is None:
+            myLinks = await self.movies_update_channel.find_one({})
+            if myLinks is not None:
+                return myLinks.get("id")
+            else:
+                return None
+        return await self.movies_update_channel.update_one({} , {'$set': {'id': id}} , upsert=True)
+
+    async def del_movies_channel_id(self):
+        try: 
+            isDeleted = await self.movies_update_channel.delete_one({})
+            if isDeleted.deleted_count > 0:
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(f"Got err in db set : {e}")
+            return False
+    async def update_post_mode_handle(self, index=0):
+        post_mode = await self.update_post_mode.find_one({})
+        if post_mode is None:
+            post_mode = DEFAULT_POST_MODE
+        if index == 1:
+            post_mode["singel_post_mode"] = not post_mode.get("singel_post_mode", True)
+        elif index == 2:
+            post_mode["all_files_post_mode"] = not post_mode.get("all_files_post_mode", True)
+        
+        await self.update_post_mode.update_one({}, {"$set": post_mode}, upsert=True)
+        
+        return post_mode
 
 db = Database(DATABASE_URI, DATABASE_NAME)

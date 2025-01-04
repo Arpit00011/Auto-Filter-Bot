@@ -57,3 +57,7 @@ def get_name(media_msg: Message) -> str:
 def get_media_file_size(m):
     media = get_media_from_message(m)
     return getattr(media, "file_size", 0)
+
+def formate_file_name(file_name):
+    file_name = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file_name.split()))
+    return file_name
