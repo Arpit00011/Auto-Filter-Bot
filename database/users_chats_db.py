@@ -65,8 +65,8 @@ class Database:
         self.grp = self.db.groups
         self.users = self.db.uersz
         self.bot = self.db.clone_bots
-        self.movies_update_channel = mydb.movies_update_channel
-        self.update_post_mode = mydb.update_post_mode
+        self.movies_update_channel = self.db.movies_update_channel
+        self.update_post_mode = self.db.update_post_mode
         #secondary db
         self._client2 = motor.motor_asyncio.AsyncIOMotorClient(SECONDDB_URI)
         self.db2 = self._client2[database_name]
