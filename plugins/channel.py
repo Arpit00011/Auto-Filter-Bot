@@ -56,7 +56,7 @@ async def get_imdb(file_name, post_mode):
 async def send_movie_updates(bot, file_name, caption, file_id):
     if not post_mode.get('singel_post_mode' , True):
         try:
-        year_match = re.search(r"\b(19|20)\d{2}\b", caption)
+            year_match = re.search(r"\b(19|20)\d{2}\b", caption)
         year = year_match.group(0) if year_match else None      
         pattern = r"(?i)(?:s|season)0*(\d{1,2})"
         season = re.search(pattern, caption)
