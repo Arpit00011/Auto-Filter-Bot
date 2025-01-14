@@ -38,22 +38,27 @@ def name_format(file_name: str):
     imdb_file_name = ' '.join(words)
     return imdb_file_name
 
-async def get_imdb(file_name, post_mode):
-    imdb_file_name = name_format(file_name)
+async def get_imdb(file_name):
+    imdb_file_name = await movie_name_format(file_name)
     imdb = await get_poster(imdb_file_name)
-    file_name = f'File Name : <code>{formate_file_name(file_name)}</code>' if post_mode.get('singel_post_mode' , True) else ''
     if imdb:
-        caption = script.MOVIES_UPDATE_TXT.format(
-            title=imdb.get('title'),
-            rating=imdb.get('rating'),
-            genres=imdb.get('genres'),
-            description=imdb.get('plot'),
-            file_name=file_name
-        )
-        return imdb.get('title'), imdb.get('poster'), caption
-    return None, None, None
+        return imdb.get('poster')
+    return None
 
-async def send_movie_updates(bot, file_name, caption, file_id):
+async def movie_name_format(file_name):
+  filename = re.sub(r'http\S+', '', re.sub(r'@\w+|#\w+', '', file_name).replace('_', ' ').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace('{', '').replace('}', '').replace('.', ' ').replace('@', '').replace(':', '').replace(';', '').replace("'", '').replace('-', '').replace('!', '')).strip()
+  return filename
+
+async def check_qualities(text, qualities: list):
+    quality = []
+    for q in qualities:
+        if q in text:
+            quality.append(q)
+    quality = ", ".join(quality)
+    return quality[:-2] if quality.endswith(", ") else quality
+
+async def send_movie_updates(bot, file_name, caption, file_id, post_mode):
+    imdb_title, poster_url, caption = await get_imdb(file_name , post_mode)
     if not post_mode.get('singel_post_mode' , True):
         try:
             year_match = re.search(r"\b(19|20)\d{2}\b", caption)
