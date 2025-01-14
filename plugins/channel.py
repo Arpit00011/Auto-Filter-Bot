@@ -37,7 +37,8 @@ def name_format(file_name: str):
     words = file_name.split()[:4]
     imdb_file_name = ' '.join(words)
     return imdb_file_name
-async def get_imdb(file_name, post_mode):
+
+async def get_imdb(file_name , post_mode):
     imdb_file_name = name_format(file_name)
     imdb = await get_poster(imdb_file_name)
     file_name = f'File Name : <code>{formate_file_name(file_name)}</code>' if post_mode.get('singel_post_mode' , True) else ''
@@ -50,7 +51,8 @@ async def get_imdb(file_name, post_mode):
             file_name=file_name
         )
         return imdb.get('title'), imdb.get('poster'), caption
-    return None, None, None
+    return None, None, None 
+
 async def send_movie_updates(bot, file_name, file_id , post_mode):
     imdb_title, poster_url, caption = await get_imdb(file_name , post_mode)
     if not post_mode.get('singel_post_mode' , True):
