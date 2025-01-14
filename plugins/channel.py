@@ -98,5 +98,5 @@ async def send_movie_updates(bot, file_name, caption, file_id):
             await bot.send_photo(movie_update_channel if movie_update_channel else MOVIE_UPDATE_CHANNEL, 
                                  photo=no_poster, caption=caption_message, reply_markup=reply_markup)  
     except Exception as e:
-        print('Failed to send movie update. Error - ', e)
-        await bot.send_message(LOG_CHANNEL, f'Failed to send movie update. Error - {e}')
+        print('Error in send_movie_updates', e)
+        pass
