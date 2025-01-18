@@ -2783,13 +2783,13 @@ async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
     if not spoll:
         message = msg
         search = message.text
-        files, offset, total_results = await get_search_results(message.chat.id ,search, offset=0, filter=True)
-        settings = await get_settings(message.chat.id)
-        if not files:
-            if settings["spell_check"]:
-                return await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
-            else:
-                return
+            files, offset, total_results = await get_search_results(message.chat.id ,search, offset=0, filter=True)
+            settings = await get_settings(message.chat.id)
+            if not files:
+                if settings["spell_check"]:
+                    return await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
+                else:
+                    return
         else:
             return
     else:
