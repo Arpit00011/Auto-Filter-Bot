@@ -2784,10 +2784,10 @@ async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
         message = msg
         settings = await get_settings(message.chat.id)
         search = message.text
-        files, offset, total_results = await get_search_results(message.chat.id ,search, offset=0, filter=True)
+        files, offset, total_results = await get_search_results(search)
         if not files:
             if settings["spell_check"]:
-                await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
+                await advantage_spell_chok(message, s)
             return
     else:
         message = msg.message.reply_to_message  # msg will be callback query
