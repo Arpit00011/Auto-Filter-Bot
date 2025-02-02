@@ -506,7 +506,7 @@ async def start(client, message):
         return    
 
     elif data.startswith('getfile'):
-        searches = message.command[1].split("-", 1)[1] 
+        searches = message.replace('https://telegram.me/{temp.U_NAME}?start=getfile-',' ') 
         search = searches.replace('-',' ')
         message.text = search 
         await auto_filter(client, message) 
