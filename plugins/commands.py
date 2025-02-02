@@ -123,15 +123,7 @@ async def start(client, message):
             reply_markup=InlineKeyboardMarkup(btn),
             parse_mode=enums.ParseMode.MARKDOWN
             )
-        return
-        
-    if len(message.command) == 2 and message.command[1].startswith('getfile'):
-        searches = message.command[1].split("-", 1)[1] 
-        search = searches.replace('-',' ')
-        message.text = search 
-        await auto_filter(client, message) 
-        return
-        
+        return   
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         if PREMIUM_AND_REFERAL_MODE == True:
             buttons = [[
@@ -512,7 +504,14 @@ async def start(client, message):
             await x.delete()
         await k.edit_text("<b>Your All Files/Videos is successfully deleted!!!</b>")
         return    
-        
+
+    elif data.startswith('getfile'):
+        searches = message.command[1].split("-", 1)[1] 
+        search = searches.replace('-',' ')
+        message.text = search 
+        await auto_filter(client, message) 
+        return
+    
     elif data.startswith("files"):
         user = message.from_user.id
         if temp.SHORT.get(user)==None:
