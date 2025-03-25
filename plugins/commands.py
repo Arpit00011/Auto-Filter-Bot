@@ -164,6 +164,13 @@ async def start(client, message):
         )
         return
     data = message.command[1]
+    if data.split("-", 1)[0] == "getfile":
+        searches = data.split("-", 1)[1]
+        search = searches.replace('-',' ')
+        message.text = search 
+        await auto_filter(client, message) 
+        return
+else:
     if data.split("-", 1)[0] == "NAM":
         user_id = int(data.split("-", 1)[1])
         nam = await referal_add_user(user_id, message.from_user.id)
