@@ -170,6 +170,7 @@ async def start(client, message):
         message.text = search 
         await auto_filter(client, message) 
         return
+        
 else:
     if data.split("-", 1)[0] == "NAM":
         user_id = int(data.split("-", 1)[1])
@@ -512,13 +513,6 @@ else:
         await k.edit_text("<b>Your All Files/Videos is successfully deleted!!!</b>")
         return    
 
-    elif data.startswith('getfile'):
-        searches = message.command[1].split("-", 1)[1] 
-        search = searches.replace('-',' ')
-        message.text = search 
-        await auto_filter(client, message) 
-        return
-    
     elif data.startswith("files"):
         user = message.from_user.id
         if temp.SHORT.get(user)==None:
