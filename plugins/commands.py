@@ -24,7 +24,7 @@ async def start(client, message):
         searches = message.command[1].split("-", 1)[1] 
         search = searches.replace('-',' ')
         message.text = search 
-        await auto_filter(client, message) 
+        await auto_filter(client, message, reply_msg) 
         return
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
