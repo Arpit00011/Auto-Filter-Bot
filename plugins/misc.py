@@ -2,7 +2,7 @@ import os, logging, time
 from pyrogram import Client, filters, enums
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from info import IMDB_TEMPLATE, ADMINS
-from speedtest import Speedtest, ConfigRetrievalError, SpeedtestBestServerFailure
+from speedtest import Speedtest, ConfigRetrievalError
 from utils import extract_user, get_file_id, get_poster, get_size, last_online
 from datetime import datetime
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
@@ -133,10 +133,10 @@ async def speedtest(client, message):
     msg = await message.reply_text("Initiating Speedtest...")
     try:
         speed = Speedtest()
-        speed.get_best_server()
-     except (ConfigRetrievalError, SpeedtestBestServerFailure):
+    except ConfigRetrievalError:
         await msg.edit("Can't connect to Server at the Moment, Try Again Later !")
         return
+    speed.get_best_server()
     speed.download()
     speed.upload()
     speed.results.share()
