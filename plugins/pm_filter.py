@@ -2785,7 +2785,7 @@ async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
         if message.text.startswith("/"): return  # ignore commands
         if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
             return
-    else:
+        else:
         message = msg.message.reply_to_message  # msg will be callback query
         search, files, offset, total_results = spoll
         settings = await get_settings(message.chat.id)
