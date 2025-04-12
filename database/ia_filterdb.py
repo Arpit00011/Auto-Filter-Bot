@@ -127,10 +127,7 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     except:
         return []
 
-    if USE_CAPTION_FILTER:
-        filter = {'$or': [{'file_name': regex}, {'caption': regex}]}
-    else:
-        filter = {'file_name': regex}
+    filter = {'file_name': regex}
 
 
     total_results = ((await Media.count_documents(filter))+(await Media2.count_documents(filter)))
