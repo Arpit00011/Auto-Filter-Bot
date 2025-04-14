@@ -195,12 +195,12 @@ Edit info.py with variables as given below then run bot
 
 ## TELAGRAM SUPPORT 
 
-* [![Tony Stark BOTZ](https://img.shields.io/static/v1?label=Tony+Stark&message=BOTZ&color=critical)](https://t.me/TonyStark_Botz)
-* [![Tony Stark BOTZ Support](https://img.shields.io/static/v1?label=Tony+Stark&message=BOTZ+Support&color=critical)](https://t.me/TonyStarkBotzXSupport)
+* [![Tony Stark BOTZ](https://img.shields.io/static/v1?label=Tony+Stark&message=BOTZ&color=critical)](https://t.me/DigitalGalaxyHQ)
+* [![Tony Stark BOTZ Support](https://img.shields.io/static/v1?label=Tony+Stark&message=BOTZ+Support&color=critical)](https://t.me/DigitalGalaxyHQXSupport)
 
 ## Thanks to 
  - <b>Thanks To [Pyrogram Library](https://github.com/pyrogram/pyrogram) & [Pyrofork Library](https://github.com/Mayuri-Chan/pyrofork)
- - Thanks To [Tony Stark Botz](https://t.me/TonyStark_Botz) To Modify And Add Amazing Feature In The Repo
+ - Thanks To [Tony Stark Botz](https://t.me/DigitalGalaxyHQ) To Modify And Add Amazing Feature In The Repo
  - Thanks To [Peter](https://t.me/Spider_Man_02) To Modify And Add Amazing Feature In The Repo
  - Thanks To [Eva Marie](https://t.me/TeamEvamaria) For Base Repo
  - Thanks To All Everyone In This Journey</b>
@@ -209,7 +209,7 @@ Edit info.py with variables as given below then run bot
  
 * [![Contact Developer](https://img.shields.io/static/v1?label=Contact+Developer&message=On+Telegram&color=critical)](https://telegram.me/Spider_Man_02)
 
-<b>[Note To So Called Devs](https://t.me/TonyStark_Botz): 
+<b>[Note To So Called Devs](https://t.me/DigitalGalaxyHQ): 
 
 Fork The Repo And Edit As Per Your Needs.</b>
 
