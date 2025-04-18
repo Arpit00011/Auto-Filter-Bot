@@ -183,10 +183,10 @@ async def get_precise_search_results(chat_id, query, file_type=None, max_results
         #query = query.replace(' ', r'(\s|\.|\+|\-|_)')
         #raw_pattern = r'(\s|_|\-|\.|\+)' + query + r'(\s|_|\-|\.|\+)'
     if not query:
-        raw_pattern = '.'
+        return []
     
     try:
-        regex = re.compile(raw_pattern, flags=re.IGNORECASE)
+         regex = re.compile(re.escape(query), flags=re.IGNORECASE)
     except:
         return []
 
