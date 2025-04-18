@@ -70,6 +70,13 @@ async def send_movie_updates(bot, file_name, file_id , post_mode):
     search_movie = imdb_title.replace(":", '-')
     search_movie = imdb_title.replace(",", '-')
     search_movie = imdb_title.replace(".", '-')
+    search_movie = imdb_title.replace(",", '-')
+    search_movie = imdb_title.replace('"', '-')
+    search_movie = imdb_title.replace("\\", '-')
+    search_movie = imdb_title.replace("/", '-')
+    search_movie = imdb_title.replace("|", '-')
+    search_movie = imdb_title.replace("+", '-')
+    search_movie = imdb_title.replace("-", '-')
     btn = [
         [InlineKeyboardButton('Get File', url=f'https://telegram.me/{temp.U_NAME}?start=getfile-{search_movie}')]
     ]
