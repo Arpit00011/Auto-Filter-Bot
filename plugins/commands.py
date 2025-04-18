@@ -689,13 +689,15 @@ async def log_file(bot, message):
     except Exception as e:
         await message.reply(str(e))
 
+
 @Client.on_message(filters.command('delete') & filters.user(ADMINS))
 async def delete(bot, message):
-    reply = await bot.ask(message.from_user.id, "Now Send Me Media Which You Want to delete")
-    if reply.media:
-        msg = await message.reply("Processing...⏳", quote=True)
+    """Delete file from database"""
+    reply = message.reply_to_message
+    if reply and reply.media:
+        msg = await message.reply("Pʀᴏᴄᴇssɪɴɢ...⏳", quote=True)
     else:
-        await message.reply('Send Me Video, File Or Document.', quote=True)
+        await message.reply('Rᴇᴘʟʏ ᴛᴏ ғɪʟᴇ ᴡɪᴛʜ /delete ᴡʜɪᴄʜ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴇʟᴇᴛᴇ', quote=True)
         return
 
     for file_type in ("document", "video", "audio"):
@@ -703,11 +705,10 @@ async def delete(bot, message):
         if media is not None:
             break
     else:
-        await msg.edit('This is not supported file format')
+        await msg.edit('Tʜɪs ɪs ɴᴏᴛ sᴜᴘᴘᴏʀᴛᴇᴅ ғɪʟᴇ ғᴏʀᴍᴀᴛ')
         return
     
     file_id, file_ref = unpack_new_file_id(media.file_id)
-
     if await Media.count_documents({'file_id': file_id}):
         result = await Media.collection.delete_one({
             '_id': file_id,
@@ -717,7 +718,7 @@ async def delete(bot, message):
             '_id': file_id,
         })
     if result.deleted_count:
-        await msg.edit('File is successfully deleted from database')
+        await msg.edit('Fɪʟᴇ ɪs sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ ғʀᴏᴍ ᴅᴀᴛᴀʙᴀsᴇ')
     else:
         file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.file_name))
         result = await Media.collection.delete_many({
@@ -726,7 +727,7 @@ async def delete(bot, message):
             'mime_type': media.mime_type
             })
         if result.deleted_count:
-            await msg.edit('File is successfully deleted from database')
+            await msg.edit('Fɪʟᴇ ɪs sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ ғʀᴏᴍ ᴅᴀᴛᴀʙᴀsᴇ')
         else:
             result = await Media2.collection.delete_many({
                 'file_name': file_name,
@@ -734,7 +735,7 @@ async def delete(bot, message):
                 'mime_type': media.mime_type
             })
             if result.deleted_count:
-                await msg.edit('File is successfully deleted from database')
+                await msg.edit('Fɪʟᴇ ɪs sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ ғʀᴏᴍ ᴅᴀᴛᴀʙᴀsᴇ')
             else:
                 # files indexed before https://github.com/EvamariaTG/EvaMaria/commit/f3d2a1bcb155faf44178e5d7a685a1b533e714bf#diff-86b613edf1748372103e94cacff3b578b36b698ef9c16817bb98fe9ef22fb669R39 
                 # have original file name.
@@ -784,7 +785,7 @@ async def delete_all_index_confirm(bot, message):
     await Media.collection.drop()
     await Media2.collection.drop()
     await message.answer('ɴᴀᴍᴀɴ ʀᴇᴍᴏᴠᴇᴅ ᴇᴠᴇʀʏᴛʜɪɴɢ')
-    await message.message.edit('Succesfully Deleted All The Indexed Files.')
+    await message.message.edit('Sᴜᴄᴄᴇsғᴜʟʟʏ Dᴇʟᴇᴛᴇᴅ Aʟʟ Tʜᴇ Iɴᴅᴇxᴇᴅ Fɪʟᴇs.')
 
 
 @Client.on_message(filters.command('settings'))
