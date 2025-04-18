@@ -180,10 +180,7 @@ async def get_bad_files(query, file_type=None, filter=False):
     except:
         return []
 
-    if USE_CAPTION_FILTER:
-        filter = {'$or': [{'file_name': regex}, {'caption': regex}]}
-    else:
-        filter = {'file_name': regex}
+    filter = {'file_name': regex}
 
 
     cursor = Media.find(filter)
