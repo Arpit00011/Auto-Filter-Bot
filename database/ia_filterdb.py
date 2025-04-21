@@ -1,5 +1,4 @@
 import logging
-from functools import lru_cache
 from struct import pack
 import re
 import base64
@@ -162,63 +161,64 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
 
     return files, next_offset, total_results
 
-
-
-# Cache for 5 minutes (300 seconds)
-@lru_cache(maxsize=512)
 async def get_precise_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False):
-    """Optimized version - Faster DB queries + Smart caching"""
-    
-    # 1. Handle Settings (Ek baar mein hi lelo)
+    """For given query return (results, next_offset)"""
     if chat_id is not None:
         settings = await get_settings(int(chat_id))
-        max_results = 10 if settings.get('max_btn', False) else int(MAX_B_TN)
-    
+        try:
+            if settings['max_btn']:
+                max_results = 10
+            else:
+                max_results = int(MAX_B_TN)
+        except KeyError:
+            await save_group_settings(int(chat_id), 'max_btn', False)
+            settings = await get_settings(int(chat_id))
+            if settings['max_btn']:
+                max_results = 10
+            else:
+                max_results = int(MAX_B_TN)
     query = query.strip()
+    #if filter:
+        #better ?
+        #query = query.replace(' ', r'(\s|\.|\+|\-|_)')
+        #raw_pattern = r'(\s|_|\-|\.|\+)' + query + r'(\s|_|\-|\.|\+)'
     if not query:
-        return [], 0, 0
+        return []
+    
+    try:
+         regex = re.compile(re.escape(query), flags=re.IGNORECASE)
+    except:
+        return []
 
-    # 2. Smart Regex (Case-Insensitive)
-    regex = re.compile(re.escape(query), flags=re.IGNORECASE)
     filter = {'file_name': regex}
 
-    # 3. PARALLEL COUNTING (MongoDB Aggregation)
-    pipeline = [
-        {"$match": filter},
-        {"$count": "total"}
-    ]
-    
-    # Ek saath dono collections ka count nikalo
-    db = AsyncIOMotorClient(MONGO_URI).your_db_name
-    total1 = await db.Media.aggregate(pipeline).next()
-    total2 = await db.Media2.aggregate(pipeline).next()
-    total_results = (total1.get('total', 0) + total2.get('total', 0))
 
-    # 4. Even Number Check (Avoid +1 if already even)
-    if max_results % 2 != 0:
+    total_results = ((await Media.count_documents(filter))+(await Media2.count_documents(filter)))
+
+    #verifies max_results is an even number or not
+    if max_results%2 != 0: #if max_results is an odd number, add 1 to make it an even number
+        logger.info(f"Since max_results is an odd number ({max_results}), bot will use {max_results+1} as max_results to make it even.")
         max_results += 1
 
-    # 5. PARALLEL FETCHING (Media + Media2)
-    cursor1 = db.Media.find(filter).sort('$natural', -1)
-    cursor2 = db.Media2.find(filter).sort('$natural', -1)
-
-    # 6. Smart Offset Handling
-    files = []
-    remaining = max_results
-    
-    # Pehle Media2 se try karo
-    if offset < await db.Media2.count_documents(filter):
-        cursor2.skip(offset).limit(remaining)
-        files = await cursor2.to_list(length=remaining)
-        remaining -= len(files)
-    
-    # Phir Media se baki ke results lo
-    if remaining > 0:
-        cursor1.skip(max(0, offset - await db.Media2.count_documents(filter))).limit(remaining)
-        files += await cursor1.to_list(length=remaining)
-
-    # 7. Next Offset Logic
-    next_offset = offset + len(files)
+    cursor = Media.find(filter)
+    cursor2 = Media2.find(filter)
+    # Sort by recent
+    cursor.sort('$natural', -1)
+    cursor2.sort('$natural', -1)
+    # Slice files according to offset and max results
+    cursor2.skip(offset).limit(max_results)
+    # Get list of files
+    fileList2 = await cursor2.to_list(length=max_results)
+    if len(fileList2)<max_results:
+        next_offset = offset+len(fileList2)
+        cursorSkipper = (next_offset-(await Media2.count_documents(filter)))
+        cursor.skip(cursorSkipper if cursorSkipper>=0 else 0).limit(max_results-len(fileList2))
+        fileList1 = await cursor.to_list(length=(max_results-len(fileList2)))
+        files = fileList2+fileList1
+        next_offset = next_offset + len(fileList1)
+    else:
+        files = fileList2
+        next_offset = offset + max_results
     if next_offset >= total_results:
         next_offset = ''
 
