@@ -741,6 +741,60 @@ async def delete(bot, message):
                     else:
                         await msg.edit('Fɪʟᴇ ɴᴏᴛ ғᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀsᴇ')
 
+@Client.on_message(filters.command('deletedb1') & filters.user(ADMINS))
+async def delete_all_index(bot, message):
+    await message.reply_text(
+        'This will delete all indexed files in DB1.\nDo you want to continue??',
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="YES", callback_data="autofilter_delete_db1"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="CANCEL", callback_data="close_data"
+                    )
+                ],
+            ]
+        ),
+        quote=True,
+    )
+
+@Client.on_callback_query(filters.regex(r'^autofilter_delete_db1'))
+async def delete_all_index_confirm(bot, message):
+    await Media.collection.drop()
+    await message.answer('ɴᴀᴍᴀɴ ʀᴇᴍᴏᴠᴇᴅ ᴇᴠᴇʀʏᴛʜɪɴɢ')
+    await message.message.edit('Sᴜᴄᴄᴇsғᴜʟʟʏ Dᴇʟᴇᴛᴇᴅ Aʟʟ Tʜᴇ Iɴᴅᴇxᴇᴅ Fɪʟᴇs.')
+
+@Client.on_message(filters.command('deletedb2') & filters.user(ADMINS))
+async def delete_all_index(bot, message):
+    await message.reply_text(
+        'This will delete all indexed files in DB1.\nDo you want to continue??',
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="YES", callback_data="autofilter_delete_db2"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="CANCEL", callback_data="close_data"
+                    )
+                ],
+            ]
+        ),
+        quote=True,
+    )
+
+@Client.on_callback_query(filters.regex(r'^autofilter_delete_db2'))
+async def delete_all_index_confirm(bot, message):
+    await Media2.collection.drop()
+    await message.answer('ɴᴀᴍᴀɴ ʀᴇᴍᴏᴠᴇᴅ ᴇᴠᴇʀʏᴛʜɪɴɢ')
+    await message.message.edit('Sᴜᴄᴄᴇsғᴜʟʟʏ Dᴇʟᴇᴛᴇᴅ Aʟʟ Tʜᴇ Iɴᴅᴇxᴇᴅ Fɪʟᴇs.')
+
 
 @Client.on_message(filters.command('deleteall') & filters.user(ADMINS))
 async def delete_all_index(bot, message):
