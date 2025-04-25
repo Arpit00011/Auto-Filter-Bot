@@ -771,7 +771,7 @@ async def delete_all_index_confirm(bot, message):
 @Client.on_message(filters.command('deletedb2') & filters.user(ADMINS))
 async def delete_all_index(bot, message):
     await message.reply_text(
-        'This will delete all indexed files in DB1.\nDo you want to continue??',
+        'This will delete all indexed files in DB2.\nDo you want to continue??',
         reply_markup=InlineKeyboardMarkup(
             [
                 [
