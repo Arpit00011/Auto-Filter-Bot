@@ -2482,18 +2482,14 @@ async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
     if not spoll:
         message = msg
-        if message.text.startswith("/"): return  # ignore commands
-        if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
-            return
-        if len(message.text) < 100:
-            search = name
-            files, offset, total_results = await get_search_results(message.chat.id ,search, offset=0, filter=True)
-            settings = await get_settings(message.chat.id)
-            if not files:
-                if settings["spell_check"]:
-                    return await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
-                else:
-                    return
+        search = name
+        files, offset, total_results = await get_search_results(message.chat.id ,search, offset=0, filter=True)
+        settings = await get_settings(message.chat.id)
+        if not files:
+            if settings["spell_check"]:
+                return await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
+            else:
+                return
         else:
             return
     else:
