@@ -257,6 +257,8 @@ async def get_bad_files(query, file_type=None, filter=False):
     #calculate total results
     total_results = len(files)
 
+    return files, total_results
+
 async def get_file_details(query):
     filter = {'file_id': query}
     cursor = Media.find(filter)
