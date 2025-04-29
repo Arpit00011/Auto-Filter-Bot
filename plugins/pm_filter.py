@@ -2472,7 +2472,7 @@ async def ai_spell_check(wrong_name):
         if not closest_match or closest_match[1] <= 80:
             return 
         movie = closest_match[0]
-        files, offset, total_results = await get_search_results(chat_id=chat_id, query=movie)
+        files, offset, total_results = await get_search_results(chat_id=chat_id, query=movie, offset=0, filter=True)
         if files:
             return movie
         movie_list.remove(movie)
