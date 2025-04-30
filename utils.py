@@ -261,14 +261,14 @@ def extract_tag(file_name: str) -> str:
         if match:
             season = int(match.group(1))
             episode = int(match.group(2))
-            return f"S{season:02d}E{episode:02d} •"
+            return f"[S{season:02d}E{episode:02d}]"
     season_match = re.search(r'\b(?:s|season)\s*0*(\d{1,2})\b', file_name)
     if season_match:
         season = int(season_match.group(1))
-        return f"S{season:02d} •"
+        return f"[S{season:02d}]"
     quality_match = re.search(r'\b(2160p|1080p|720p|480p|360p|4k)\b', file_name)
     if quality_match:
-        return f"{quality_match.group(1)} •"
+        return f"[{quality_match.group(1)}]"
     return ""
 
 def split_list(l, n):
