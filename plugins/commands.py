@@ -864,6 +864,13 @@ async def settings(client, message):
     
     settings = await get_settings(grp_id)
 
+    try:
+        if settings['max_btn']:
+            settings = await get_settings(grp_id)
+    except KeyError:
+    #    await save_group_settings(grp_id, 'fsub', None)
+        await save_group_settings(grp_id, 'max_btn', False)
+        settings = await get_settings(grp_id)
     if 'is_shortlink' not in settings.keys():
         await save_group_settings(grp_id, 'is_shortlink', False)
     else:
@@ -949,6 +956,16 @@ async def settings(client, message):
                 InlineKeyboardButton(
                     '✔ Oɴ' if settings["auto_ffilter"] else '✘ Oғғ',
                     callback_data=f'setgs#auto_ffilter#{settings["auto_ffilter"]}#{grp_id}',
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    'Mᴀx Bᴜᴛᴛᴏɴs',
+                    callback_data=f'setgs#max_btn#{settings["max_btn"]}#{grp_id}',
+                ),
+                InlineKeyboardButton(
+                    '10' if settings["max_btn"] else f'{MAX_B_TN}',
+                    callback_data=f'setgs#max_btn#{settings["max_btn"]}#{grp_id}',
                 ),
             ],
             [
@@ -1042,6 +1059,16 @@ async def settings(client, message):
                 InlineKeyboardButton(
                     '✔ Oɴ' if settings["auto_ffilter"] else '✘ Oғғ',
                     callback_data=f'setgs#auto_ffilter#{settings["auto_ffilter"]}#{grp_id}',
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    'Mᴀx Bᴜᴛᴛᴏɴs',
+                    callback_data=f'setgs#max_btn#{settings["max_btn"]}#{grp_id}',
+                ),
+                InlineKeyboardButton(
+                    '10' if settings["max_btn"] else f'{MAX_B_TN}',
+                    callback_data=f'setgs#max_btn#{settings["max_btn"]}#{grp_id}',
                 ),
             ],
         ]
