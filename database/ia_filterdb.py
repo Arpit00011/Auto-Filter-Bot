@@ -74,7 +74,7 @@ async def save_file(media):
             file_id=file_id,
             file_name=file_name,
             file_size=media.file_size,
-            caption=file_caption
+            caption=file_caption if file_caption else file_name
         )
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
@@ -94,22 +94,8 @@ async def save_file(media):
 
 
 
-async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False):
+async def get_search_results(query, file_type=None, max_results=MAX_B_TN, offset=0, filter=False):
     """For given query return (results, next_offset)"""
-    if chat_id is not None:
-        settings = await get_settings(int(chat_id))
-        try:
-            if settings['max_btn']:
-                max_results = 10
-            else:
-                max_results = int(MAX_B_TN)
-        except KeyError:
-            await save_group_settings(int(chat_id), 'max_btn', False)
-            settings = await get_settings(int(chat_id))
-            if settings['max_btn']:
-                max_results = 10
-            else:
-                max_results = int(MAX_B_TN)
     query = query.strip()
     #if filter:
         #better ?
@@ -161,22 +147,8 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
 
     return files, next_offset, total_results
 
-async def get_precise_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False):
+async def get_precise_search_results(query, file_type=None, max_results=MAX_B_TN, offset=0, filter=False):
     """For given query return (results, next_offset)"""
-    if chat_id is not None:
-        settings = await get_settings(int(chat_id))
-        try:
-            if settings['max_btn']:
-                max_results = 10
-            else:
-                max_results = int(MAX_B_TN)
-        except KeyError:
-            await save_group_settings(int(chat_id), 'max_btn', False)
-            settings = await get_settings(int(chat_id))
-            if settings['max_btn']:
-                max_results = 10
-            else:
-                max_results = int(MAX_B_TN)
     query = query.strip()
     #if filter:
         #better ?
