@@ -52,7 +52,7 @@ async def del_muc_id(client, message):
 async def give_url(bot, message):
     if URL != None:
         bot_url = URL
-        await message.reply(f'Here is your Bot\'s URL {bot_url}')
+        await message.reply(f'Here is your Bot\'s F2L URL\n{bot_url}\nAur yeh original URL\nhttps://calm-enid-n2movies-85dfc660.koyeb.app/')
     else:
         await message.reply(f'Bro you have not provided the URL in enviroment')
 
