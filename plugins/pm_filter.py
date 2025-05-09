@@ -2459,7 +2459,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         reply_markup = InlineKeyboardMarkup(btn)
         await query.message.edit_reply_markup(reply_markup)
 
-async def ai_spell_check(chat_id, wrong_name):
+async def ai_spell_check(wrong_name):
     async def search_movie(wrong_name):
         search_results = imdb.search_movie(wrong_name)
         movie_list = [movie['title'] for movie in search_results]
@@ -2472,10 +2472,11 @@ async def ai_spell_check(chat_id, wrong_name):
         if not closest_match or closest_match[1] <= 80:
             return 
         movie = closest_match[0]
-        files, offset, total_results = await get_search_results(chat_id=chat_id, query=movie)
+        files, offset, total_results = await get_search_results(movie)
         if files:
             return movie
         movie_list.remove(movie)
+    return
 
 async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
@@ -2488,16 +2489,8 @@ async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
             search = name
             files, offset, total_results = await get_precise_search_results(message.chat.id ,search, offset=0, filter=True)
             settings = await get_settings(message.chat.id)
-            if not files:if settings["spell_check"]:
-                    ai_sts = await m.edit('<b><i>Ai Try To Find Your Movie With Your Wrong Spelling.(1st check)</i></b>')
-                    is_misspelled = await ai_spell_check(chat_id = message.chat.id,wrong_name=search)
-                    if is_misspelled:
-                        # await ai_sts.edit(f'<b>✅Aɪ Sᴜɢɢᴇsᴛᴇᴅ ᴍᴇ<code> {is_misspelled}</code> \nSᴏ Iᴍ Sᴇᴀʀᴄʜɪɴɢ ғᴏʀ <code>{is_misspelled}</code></b>')
-                        await asyncio.sleep(2)
-                        message.text = is_misspelled
-                        await ai_sts.delete()
-                        return await auto_filter(client, message)
-                    await ai_sts.delete()
+            if not files:
+                if settings["spell_check"]:
                     return await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
                 else:
                     return
@@ -2716,7 +2709,7 @@ async def advantage_spell_chok(client, name, msg, reply_msg, nam_search):
     SPELL_CHECK[mv_id] = movielist
     if AI_SPELL_CHECK == True and nam_search == True:
         nam_search_new = False
-        nam_ai_msg = await reply_msg.edit_text("<b><i>Advance Ai Try To Find Your Movie With Your Wrong Spelling.(2nd check)</i></b>")
+        nam_ai_msg = await reply_msg.edit_text("<b><i>Advance Ai Try To Find Your Movie With Your Wrong Spelling.</i></b>")
         movienamelist = []
         movienamelist += [movie.get('title') for movie in movies]
         for nam in movienamelist:
