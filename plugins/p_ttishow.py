@@ -260,12 +260,11 @@ async def unban_a_user(bot, message):
     
 @Client.on_message(filters.command('users') & filters.user(ADMINS))
 async def list_users(bot, message):
-    # https://t.me/GetTGLink/4184
     raju = await message.reply('Getting List Of Users')
     users = await db.get_all_users()
     out = "Users Saved In DB Are:\n\n"
     for user in users:
-        out += f"<a href=tg://user?id={user['id']}>{user['name']}</a>"
+        out += f"**Name:** {user['name']}\n**ID:** `{user['id']}`"
         if user['ban_status']['is_banned']:
             out += '( Banned User )'
         out += '\n'
