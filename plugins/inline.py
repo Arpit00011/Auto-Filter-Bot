@@ -51,7 +51,7 @@ async def answer(bot, query):
     files, next_offset, total = await get_search_results(
                                                   chat_id,
                                                   string,
-                                                  max_results=10,
+                                                  max_results=6,
                                                   offset=offset)
 
     for file in files:

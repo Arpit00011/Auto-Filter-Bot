@@ -32,21 +32,6 @@ SPELL_CHECK = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
-    if message.chat.id != SUPPORT_CHAT_ID:
-        settings = await get_settings(message.chat.id)
-        chatid = message.chat.id 
-        user_id = message.from_user.id if message.from_user else 0
-        if settings['fsub'] != None:
-            try:
-                btn = await pub_is_subscribed(client, message, settings['fsub'])
-                if btn:
-                    btn.append([InlineKeyboardButton("Unmute Me 🔕", callback_data=f"unmuteme#{int(user_id)}")])
-                    await client.restrict_chat_member(chatid, message.from_user.id, ChatPermissions(can_send_messages=False))
-                    await message.reply_photo(photo=random.choice(PICS), caption=f"👋 Hello {message.from_user.mention},\n\nPlease join the channel then click on unmute me button. 😇", reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
-                    return
-            except Exception as e:
-                print(e)
-            
         manual = await manual_filters(client, message)
         if manual == False:
             settings = await get_settings(message.chat.id)
@@ -1395,27 +1380,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
         except Exception as e:
             logger.exception(e)
             await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles4_{key}")
-
-    elif query.data.startswith("unmuteme"):
-        ident, userid = query.data.split("#")
-        user_id = query.from_user.id
-        settings = await get_settings(int(query.message.chat.id))
-        if userid == 0:
-            await query.answer("You are anonymous admin !", show_alert=True)
-            return
-        try:
-            btn = await pub_is_subscribed(client, query, settings['fsub'])
-            if btn:
-                await query.answer("Kindly Join Given Channel Then Click On Unmute Button", show_alert=True)
-            else:
-                await client.unban_chat_member(query.message.chat.id, user_id)
-                await query.answer("Unmuted Successfully !", show_alert=True)
-                try:
-                    await query.message.delete()
-                except:
-                    return
-        except:
-            await query.answer("Not For Your My Dear", show_alert=True)
    
     elif query.data.startswith("del"):
         ident, file_id = query.data.split("#")
