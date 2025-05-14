@@ -51,7 +51,7 @@ class Database:
         'caption': CUSTOM_FILE_CAPTION,
         'shortlink': SHORTLINK_URL,
         'shortlink_api': SHORTLINK_API,
-        'is_shortlink': IS_SHORTLINK
+        'is_shortlink': IS_SHORTLINK,
         'tutorial': TUTORIAL,
         'is_tutorial': IS_TUTORIAL,
     }
