@@ -85,7 +85,7 @@ async def start(client, message):
             parse_mode=enums.ParseMode.HTML
         )
         return
-    if MULTI_FSUB and not await is_multi_subscribed(client, message, channels):
+    if not await db.has_premium_access(message.from_user.id):
         channels = (await get_settings(int(message.from_user.id))).get('fsub')
         if channels:  
             btn = await is_multi_subscribed(client, message, channels)
@@ -93,7 +93,7 @@ async def start(client, message):
                 kk, file_id = message.command[1].split("_", 1)
                 btn.append([InlineKeyboardButton("♻️ ᴛʀʏ ᴀɢᴀɪɴ ♻️", callback_data=f"checksub#{kk}#{file_id}")])
                 reply_markup = InlineKeyboardMarkup(btn)
-                text = (
+                caption = (
                     f"👋 Hello {message.from_user.mention}\n\n"
                     "You have not joined all our *Updates Channels* yet.\n"
                     "Please click the *Join Updates Channels* buttons below and ensure that you join *all* the listed channels.\n"
@@ -102,9 +102,9 @@ async def start(client, message):
                     "कृपया *Join Updates Channels* बटन पर क्लिक करें और सुनिश्चित करें कि आपने *सभी चैनल्स* को जॉइन किया है।\n"
                     "इसके बाद, कृपया फिर से प्रयास करें।"
                 )
-                await client.send_message(
-                    chat_id=message.from_user.id,
-                    text=text,
+                await message.reply_photo(
+                    photo=random.choice(PICS),
+                    caption=caption,
                     reply_markup=reply_markup,
                     parse_mode=enums.ParseMode.HTML
                 )
