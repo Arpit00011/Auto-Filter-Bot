@@ -3,7 +3,7 @@ from pymongo.errors import DuplicateKeyError
 import motor.motor_asyncio
 from pymongo import MongoClient
 from sample_info import tempDict
-from info import DATABASE_NAME, DATABASE_URI, CUSTOM_FILE_CAPTION, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, SECONDDB_URI, DEFAULT_POST_MODE
+from info import DATABASE_NAME, DATABASE_URI, CUSTOM_FILE_CAPTION, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, MULTI_FSUB, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, SECONDDB_URI, DEFAULT_POST_MODE
 import time
 import datetime
 
@@ -54,6 +54,7 @@ class Database:
         'is_shortlink': IS_SHORTLINK,
         'tutorial': TUTORIAL,
         'is_tutorial': IS_TUTORIAL,
+        'fsub': MULTI_FSUB,
     }
     
     def __init__(self, database_name):
