@@ -2436,7 +2436,7 @@ async def ai_spell_check(chat_id, wrong_name):
         if not closest_match or closest_match[1] <= 80:
             return 
         movie = closest_match[0]
-        files, offset, total_results = await get_search_results(chat_id=chat_id, query=movie, offset=0, filter=True)
+        files, offset, total_results = await get_search_results(chat_id=chat_id, query=movie)
         if files:
             return movie
         movie_list.remove(movie)
@@ -2454,16 +2454,9 @@ async def auto_filter(client, name, msg, reply_msg, ai_search, spoll=False):
             settings = await get_settings(message.chat.id)
             if not files:
                 if settings["spell_check"]:
-                    ai_sts = await reply_msg.edit('ᴄʜᴇᴄᴋɪɴɢ ʏᴏᴜʀ ꜱᴘᴇʟʟɪɴɢ...')
-                    is_misspelled = await ai_spell_check(chat_id = message.chat.id, wrong_name = search, offset=0, filter=True)
-                    if is_misspelled:
-                        await ai_sts.edit(f'<b>✅Aɪ Sᴜɢɢᴇsᴛᴇᴅ ᴍᴇ<code> {is_misspelled}</code> \nSᴏ Iᴍ Sᴇᴀʀᴄʜɪɴɢ ғᴏʀ <code>{is_misspelled}</code></b>')
-                        await asyncio.sleep(2)
-                        message.text = is_misspelled
-                        await ai_sts.delete()
-                        ai_search = True
-                        return await auto_filter(client, message, ai_search)
-                    await ai_sts.delete()
+                    return await advantage_spell_chok(client, name, msg, reply_msg, ai_search)
+                else:
+                    return
         else:
             return
     else:
