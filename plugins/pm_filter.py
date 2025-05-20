@@ -2675,8 +2675,8 @@ async def advantage_spell_chok(client, name, msg, nam_search):
             except:
                 pass
             if mv_rqst.startswith(nam[0]):
-                await auto_filter(client, nam, msg, nam_search_new)
                 await nam_ai_msg.delete()
+                await auto_filter(client, nam, msg, nam_search_new)
                 break
         reqst_gle = mv_rqst.replace(" ", "+")
         button = [[
