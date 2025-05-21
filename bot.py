@@ -2,6 +2,7 @@
 # Ask Doubt on telegram @Spider_Man_02
 
 import sys, glob, importlib, logging, logging.config, pytz, asyncio, uvloop
+uvloop.install()
 from pathlib import Path
 
 # Get logging configurations
