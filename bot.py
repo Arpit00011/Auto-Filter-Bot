@@ -1,7 +1,7 @@
 # Don't Remove Credit @DigitalGalaxyHQ
 # Ask Doubt on telegram @Spider_Man_02
 
-import sys, glob, importlib, logging, logging.config, pytz, asyncio
+import sys, glob, importlib, logging, logging.config, pytz, asyncio, uvloop
 from pathlib import Path
 
 # Get logging configurations
