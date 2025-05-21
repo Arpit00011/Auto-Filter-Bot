@@ -1,7 +1,7 @@
 # Don't Remove Credit @DigitalGalaxyHQ
 # Ask Doubt on telegram @Spider_Man_02
 
-import sys, glob, importlib, logging, logging.config, pytz, asyncio, uvloop
+import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
 
 # Get logging configurations
@@ -31,9 +31,6 @@ from plugins import web_server
 from Naman.bot import NamanBot
 from Naman.util.keepalive import ping_server
 from Naman.bot.clients import initialize_clients
-
-
-uvloop.install()
 
 ppath = "plugins/*.py"
 files = glob.glob(ppath)

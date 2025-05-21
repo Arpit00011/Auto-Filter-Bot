@@ -5,7 +5,6 @@ bs4
 shortzy 
 datetime 
 pytz 
-uvloop
 aiohttp
 yt-dlp
 youtube-dl
