@@ -35,7 +35,7 @@ from Naman.bot.clients import initialize_clients
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
 NamanBot.start()
-loop = asyncio.get_event_loop()
+
 
 
 async def start():
@@ -93,6 +93,7 @@ async def start():
 
 
 if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(start())
     except KeyboardInterrupt:
