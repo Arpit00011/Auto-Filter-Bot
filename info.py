@@ -144,6 +144,11 @@ else:
     ON_HEROKU = False
 URL = environ.get("URL", "")
 
+#Auto forward info
+from_channel = environ.get('FROM_CHANNEL', '')
+FROM_CHANNEL = int(from_channel) if from_channel and id_pattern.search(from_channel) else None
+to_channel = environ.get('TO_CHANNEL', '')
+TO_CHANNEL = int(to_channel) if to_channel and id_pattern.search(to_channel) else None
 
 
 # Auto Approve Info : If True Then Bot Approve New Upcoming Join Request Else Not
