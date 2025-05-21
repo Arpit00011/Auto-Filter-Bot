@@ -37,13 +37,13 @@ uvloop.install()
 
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
-NamanBot.start()
-loop = asyncio.get_event_loop()
+
 
 
 async def start():
     print('\n')
     print('Initalizing Your Bot')
+    await NamanBot.start()
     bot_info = await NamanBot.get_me()
     await initialize_clients()
     for name in files:
@@ -97,7 +97,7 @@ async def start():
 
 if __name__ == '__main__':
     try:
-        loop.run_until_complete(start())
+        asyncio.run(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
 
