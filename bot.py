@@ -38,7 +38,6 @@ uvloop.install()
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
 NamanBot.start()
-loop = asyncio.get_event_loop()
 
 
 async def start():
