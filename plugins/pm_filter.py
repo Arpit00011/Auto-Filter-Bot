@@ -2454,15 +2454,6 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
             settings = await get_settings(message.chat.id)
             if not files:
                 if settings["spell_check"]:
-                    ai_sts = await message.reply_text('ᴄʜᴇᴄᴋɪɴɢ ʏᴏᴜʀ ꜱᴘᴇʟʟɪɴɢ...', reply_to_message_id=message.id)
-                    is_misspelled = await ai_spell_check(wrong_name=search)
-                    if is_misspelled:
-                        await ai_sts.edit(f'<b>✅Aɪ Sᴜɢɢᴇsᴛᴇᴅ ᴍᴇ<code> {is_misspelled}</code> \nSᴏ Iᴍ Sᴇᴀʀᴄʜɪɴɢ ғᴏʀ <code>{is_misspelled}</code></b>', reply_to_message_id=message.id)
-                        await asyncio.sleep(2)
-                        ai_name = is_misspelled
-                        await ai_sts.delete()
-                        return await auto_filter(client, ai_name, message, ai_search)
-                    await ai_sts.delete()
                     return await advantage_spell_chok(client, name, msg, ai_search)
                 else:
                     return
