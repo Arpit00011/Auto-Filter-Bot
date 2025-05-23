@@ -216,7 +216,7 @@ async def get_search2_results(query, file_type=None, max_results=10, offset=0, f
     if next_offset > total_results:
         next_offset = ''
 
-    cursor2 = Media.find(filter)
+    cursor2 = Media2.find(filter)
     # Sort by recent
     cursor2.sort('$natural', -1)
     # Slice files according to offset and max results
