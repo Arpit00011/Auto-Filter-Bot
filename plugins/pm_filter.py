@@ -239,12 +239,12 @@ async def advantage_spoll_choker(bot, query):
         ai_search = True
         await auto_filter(bot, movie, query, ai_search, k)
     else:
+        reqstr1 = query.from_user.id if query.from_user else 0
+        reqstr = await bot.get_users(reqstr1)
+        button = [[
+            InlineKeyboardButton("💢 𝗿𝗲𝗾𝘂𝗲𝘀𝘁 💢", url="https://t.me/MovieTimesXDisc")
+        ]]
         if NO_RESULTS_MSG:
-            reqstr1 = query.from_user.id if query.from_user else 0
-            reqstr = await bot.get_users(reqstr1)
-            button = [[
-                InlineKeyboardButton("💢 𝗿𝗲𝗾𝘂𝗲𝘀𝘁 💢", url="https://t.me/MovieTimesXDisc")
-            ]]
             await bot.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, movie)))
         k_msg = await query.message.edit(script.MVE_NT_FND, reply_markup=InlineKeyboardMarkup(button))
         await asyncio.sleep(10)
