@@ -1,8 +1,7 @@
 # Don't Remove Credit @DigitalGalaxyHQ
 # Ask Doubt on telegram @Spider_Man_02
 
-import sys, glob, importlib, logging, logging.config, pytz, asyncio, uvloop
-uvloop.install()
+import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
 
 # Get logging configurations
