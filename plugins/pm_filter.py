@@ -2435,7 +2435,7 @@ async def ai_spell_check(wrong_name):
         files, offset, total_results = await get_search_results(movie)
         if files:
             return movie
-        movie_list.remove(movie)
+            movie_list.remove(movie)
         else:
             await ai_sts.edit(f'<b>Error with ai_spell_check </b>', reply_to_message_id=message.id)
     return
