@@ -2436,8 +2436,6 @@ async def ai_spell_check(wrong_name):
         if files:
             return movie
             movie_list.remove(movie)
-        else:
-            await ai_sts.edit(f'<b>Error with ai_spell_check </b>', reply_to_message_id=message.id)
 
 async def auto_filter(client, name, msg, ai_search, spoll=False):
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
