@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQ
 from pyrogram import Client, filters, enums
 from pyrogram.errors import UserIsBlocked, MessageNotModified, PeerIdInvalid
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
-from utils import get_size, extract_tag, is_subscribed, is_multi_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings, get_shortlink, get_tutorial, send_all, get_cap
+from utils import get_size, silent_size, extract_tag, is_subscribed, is_multi_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings, get_shortlink, get_tutorial, send_all, get_cap
 from database.users_chats_db import db
 from database.ia_filterdb import Media, Media2, get_file_details, get_search_results, get_precise_search_results, get_bad_files, db as clientDB, db2 as clientDB2
 from database.filters_mdb import del_all, find_filter, get_filters
@@ -102,7 +102,7 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -335,7 +335,7 @@ async def filter_yearss_cb_handler(client: Client, query: CallbackQuery):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -487,7 +487,7 @@ async def filter_episodes_cb_handler(client: Client, query: CallbackQuery):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -641,7 +641,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -824,7 +824,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -962,7 +962,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"⚜️[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"⚜️[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -2469,7 +2469,7 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}", callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
@@ -2561,7 +2561,7 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
         if not settings["button"]:
             cap+="<b>\n\n<u>🍿 Your Movie Files 👇</u></b>\n"
             for file in files:
-                cap += f"<b>\n📁 <a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'>[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}\n</a></b>"
+                cap += f"<b>\n📁 <a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'>[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}\n</a></b>"
     else:
         if settings["button"]:
             cap = f"<b>Tʜᴇ Rᴇꜱᴜʟᴛꜱ Fᴏʀ ☞ {search}\n\nRᴇǫᴜᴇsᴛᴇᴅ Bʏ ☞ {message.from_user.mention}\n\nʀᴇsᴜʟᴛ sʜᴏᴡ ɪɴ ☞ {remaining_seconds} sᴇᴄᴏɴᴅs\n\nᴘᴏᴡᴇʀᴇᴅ ʙʏ ☞ : {message.chat.title} \n\n⚠️ ᴀꜰᴛᴇʀ 5 ᴍɪɴᴜᴛᴇꜱ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴡɪʟʟ ʙᴇ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴅᴇʟᴇᴛᴇᴅ 🗑️\n\n</b>"
@@ -2569,7 +2569,7 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
             cap = f"<b>Tʜᴇ Rᴇꜱᴜʟᴛꜱ Fᴏʀ ☞ {search}\n\nRᴇǫᴜᴇsᴛᴇᴅ Bʏ ☞ {message.from_user.mention}\n\nʀᴇsᴜʟᴛ sʜᴏᴡ ɪɴ ☞ {remaining_seconds} sᴇᴄᴏɴᴅs\n\nᴘᴏᴡᴇʀᴇᴅ ʙʏ ☞ : {message.chat.title} \n\n⚠️ ᴀꜰᴛᴇʀ 5 ᴍɪɴᴜᴛᴇꜱ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴡɪʟʟ ʙᴇ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴅᴇʟᴇᴛᴇᴅ 🗑️\n\n</b>"
             cap+="<b><u>🍿 Your Movie Files 👇</u></b>\n\n"
             for file in files:
-                cap += f"<b>📁 <a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'>[{get_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}\n\n</a></b>"
+                cap += f"<b>📁 <a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'>[{silent_size(file.file_size)}]|{extract_tag(file.file_name)}|{formate_file_name(file.file_name)}\n\n</a></b>"
 
     if imdb and imdb.get('poster'):
         try:
