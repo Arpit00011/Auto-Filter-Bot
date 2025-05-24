@@ -77,7 +77,6 @@ TUTORIAL = environ.get('TUTORIAL', 'https://t.me/How_To_Open_Linkl')
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'MovieTimesXDisc') # Support Chat Link Without https:// or @
 
 # True Or False
-AI_SPELL_CHECK = bool(environ.get('AI_SPELL_CHECK', True))
 PM_SEARCH = bool(environ.get('PM_SEARCH', True))
 IS_SHORTLINK = bool(environ.get('IS_SHORTLINK', False))
 MAX_BTN = is_enabled((environ.get('MAX_BTN', "True")), True)
