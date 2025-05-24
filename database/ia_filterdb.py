@@ -112,7 +112,7 @@ async def get_search_results(query, file_type=None, max_results=10, offset=0, fi
     try:
         regex = re.compile(raw_pattern, flags=re.IGNORECASE)
     except:
-        regex = query
+        return []
 
     filter = {'file_name': regex}
 
@@ -166,7 +166,7 @@ async def get_search1_results(query, file_type=None, max_results=10, offset=0, f
     try:
         regex = re.compile(raw_pattern, flags=re.IGNORECASE)
     except:
-        regex = query
+        return []
 
     filter = {'file_name': regex}
 
@@ -205,7 +205,7 @@ async def get_search2_results(query, file_type=None, max_results=10, offset=0, f
     try:
         regex = re.compile(raw_pattern, flags=re.IGNORECASE)
     except:
-        regex = query
+        return []
 
     filter = {'file_name': regex}
 
@@ -240,7 +240,7 @@ async def get_precise_search_results(query, file_type=None, max_results=10, offs
     try:
          regex = re.compile(re.escape(query), flags=re.IGNORECASE)
     except:
-        regex = query
+        return []
 
     filter = {'file_name': regex}
 
