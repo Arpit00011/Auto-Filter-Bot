@@ -2433,7 +2433,7 @@ async def ai_spell_check(wrong_name):
         if not closest_match or closest_match[1] <= 80:
             return 
         movie = closest_match[0]
-        files, offset, total_results = await get_search2_results(query=movie)
+        files, offset, total_results = await get_search2_results(movie)
         if files:
             return movie
             movie_list.remove(movie)
@@ -2457,7 +2457,7 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
             if not files:
                 if settings["spell_check"]:
                     ai_sts = await message.reply_text('ᴄʜᴇᴄᴋɪɴɢ ʏᴏᴜʀ ꜱᴘᴇʟʟɪɴɢ...', reply_to_message_id=message.id)
-                    is_misspelled = await ai_spell_check(wrong_name=search)
+                    is_misspelled = await ai_spell_check(search)
                     if is_misspelled:
                         # await ai_sts.edit_text(f'<b>✅Aɪ Sᴜɢɢᴇsᴛᴇᴅ ᴍᴇ<code> {is_misspelled}</code> \nSᴏ Iᴍ Sᴇᴀʀᴄʜɪɴɢ ғᴏʀ <code>{is_misspelled}</code></b>')
                         # await asyncio.sleep(2)
