@@ -226,7 +226,7 @@ async def advantage_spoll_choker(bot, query):
     if int(user) != 0 and query.from_user.id != int(user):
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
     if movie_ == "close_spellcheck":
-        return await query.msg.delete()
+        return await spell_check_del.delete()
     movie = movies[(int(movie_))]
     movie = re.sub(r"[:\-]", " ", movie)
     movie = re.sub(r"\s+", " ", movie).strip()
