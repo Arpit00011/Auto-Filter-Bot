@@ -2432,10 +2432,8 @@ async def ai_spell_check(wrong_name):
         if not closest_match or closest_match[1] <= 80:
             return 
         movie = closest_match[0]
-        files, offset, total_results = await get_search2_results(query=movie)
-        if files:
-            return movie
-            movie_list.remove(movie)
+        return movie
+        movie_list.remove(movie)
 
 async def auto_filter(client, name, msg, ai_search, spoll=False):
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
