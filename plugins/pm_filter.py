@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQ
 from pyrogram import Client, filters, enums
 from pyrogram.errors import UserIsBlocked, MessageNotModified, PeerIdInvalid
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
-from utils import get_size, extract_tag, is_subscribed, is_multi_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings, get_shortlink, get_tutorial, send_all, get_cap, imdb
+from utils import get_size, extract_tag, is_subscribed, is_multi_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings, get_shortlink, get_tutorial, send_all, get_cap
 from database.users_chats_db import db
 from database.ia_filterdb import Media, Media2, get_file_details, get_search_results, get_search1_results, get_search2_results, get_precise_search_results, get_bad_files, db as clientDB, db2 as clientDB2
 from database.filters_mdb import del_all, find_filter, get_filters
@@ -2436,7 +2436,6 @@ async def ai_spell_check(wrong_name):
         if files:
             return movie
             movie_list.remove(movie)
-        return
 
 async def auto_filter(client, name, msg, ai_search, spoll=False):
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
@@ -2455,15 +2454,6 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
             settings = await get_settings(message.chat.id)
             if not files:
                 if settings["spell_check"]:
-                    ai_sts = await message.reply_text('ᴄʜᴇᴄᴋɪɴɢ ʏᴏᴜʀ ꜱᴘᴇʟʟɪɴɢ...', reply_to_message_id=message.id)
-                    is_misspelled = await ai_spell_check(wrong_name=search)
-                    if is_misspelled:
-                        await ai_sts.edit_text(f'<b>✅Aɪ Sᴜɢɢᴇsᴛᴇᴅ ᴍᴇ<code> {is_misspelled}</code> \nSᴏ Iᴍ Sᴇᴀʀᴄʜɪɴɢ ғᴏʀ <code>{is_misspelled}</code></b>', reply_to_message_id=message.id)
-                        await asyncio.sleep(2)
-                        ai_name = is_misspelled
-                        await ai_sts.delete()
-                        return await auto_filter(client, ai_name, message, ai_search)
-                    await ai_sts.delete()
                     return await advantage_spell_chok(client, name, msg, ai_search)
                 else:
                     return
