@@ -2426,7 +2426,7 @@ async def ai_spell_check(wrong_name):
         return
     for _ in range(5):
         closest_match = process.extractOne(wrong_name, movie_list)
-        if not closest_match or closest_match[1] <= 80:
+        if not closest_match or closest_match[1] <= 60:
             return 
         movie = closest_match[0]
         files, offset, total_results = await get_search2_results(movie)
