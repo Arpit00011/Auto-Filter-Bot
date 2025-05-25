@@ -144,7 +144,7 @@ else:
 URL = environ.get("URL", "")
 
 #Auto forward info
-from_channel = environ.get('FROM_CHANNEL', '')
+from_channel = [environ.get('FROM_CHANNEL', '').split()]
 FROM_CHANNEL = int(from_channel) if from_channel and id_pattern.search(from_channel) else None
 to_channel = environ.get('TO_CHANNEL', '')
 TO_CHANNEL = int(to_channel) if to_channel and id_pattern.search(to_channel) else None
