@@ -23,8 +23,9 @@ async def start(client, message):
     if len(message.command) == 2 and message.command[1].startswith('getfile'):
         searches = message.command[1].split("-", 1)[1] 
         search = searches.replace('-',' ')
-        message.text = search
-        await auto_filter(client, message.text, message)
+        message.text = search 
+        ai_search = True
+        await auto_filter(client, message.text, message, ai_search)
         return
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
