@@ -2636,7 +2636,7 @@ async def auto_filter(client, name, msg, spoll=False):
             await fuk.delete()
             await message.delete()
 
-async def advantage_spell_chok(client, name, msg):
+async def advantage_spell_chok(client, name, msg, nam_search):
     mv_id = msg.id
     mv_rqst = name
     reqstr1 = msg.from_user.id if msg.from_user else 0
@@ -2664,7 +2664,6 @@ async def advantage_spell_chok(client, name, msg):
         except:
             pass
         return
-    movielist = []
     if not movies:
         reqst_gle = mv_rqst.replace(" ", "+")
         button = [[
@@ -2680,6 +2679,7 @@ async def advantage_spell_chok(client, name, msg):
         except:
             pass
         return
+    movielist = []
     movielist += [movie.get('title') for movie in movies]
     movielist += [f"{movie.get('title')} {movie.get('year')}" for movie in movies]
     SPELL_CHECK[mv_id] = movielist
