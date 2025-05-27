@@ -2677,7 +2677,6 @@ async def advantage_spell_chok(client, name, msg, nam_search):
         await k.delete()
         return
     movielist += [movie.get('title') for movie in movies]
-    movielist += [f"{movie.get('title')} {movie.get('year')}" for movie in movies]
     SPELL_CHECK[mv_id] = movielist
     if AI_SPELL_CHECK == True and nam_search == True:
         nam_search_new = False
