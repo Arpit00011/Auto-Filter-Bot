@@ -2452,7 +2452,7 @@ async def auto_filter(client, name, msg, ai_search, spoll=False):
             search = search.replace("-", " ")
             search = search.replace(":","")
             search = re.sub(r'\s+', ' ', search).strip()
-            files, offset, total_results = await get_search2_results(search, offset=0, filter=True)
+            files, offset, total_results = await get_search_results(search, offset=0, filter=True)
             settings = await get_settings(message.chat.id)
             if not files:
                 if settings["spell_check"]:
