@@ -196,9 +196,7 @@ Nᴀᴍᴇ - {}"""
 
 𝗠𝗲𝘀𝘀𝗮𝗴𝗲 <b>: {}</b>"""
 
-    CAPTION = """<b><blockquote><i>{file_caption}</i></blockquote>
-<blockquote>Jᴏɪɴ Us ➠ @MovieTimesTV </blockquote></b>"""
-
+    CAPTION = """<b><a href='https://t.me/Arpitbotmovies'>📂Fɪʟᴇɴᴀᴍᴇ : {file_name}</a>"""
     IMDB_TEMPLATE_TXT = """
 <b>Query: {qurey}
 
