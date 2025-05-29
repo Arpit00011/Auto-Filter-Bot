@@ -142,7 +142,7 @@ if 'DYNO' in environ:
     ON_HEROKU = True
 else:
     ON_HEROKU = False
-URL = environ.get("URL", "")
+URL = environ.get("URL", "https://sweet-karie-appi00-156399f6.koyeb.app/")
 
 
 # Auto Approve Info : If True Then Bot Approve New Upcoming Join Request Else Not
