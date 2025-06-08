@@ -210,7 +210,7 @@ IMDb Data:
 📀 RunTime: {runtime} Minutes
 📆 Release Info : {release_date}
 🎛 Countries : <code>{countries}</code>
-BOT BY : @Spider_Man_02
+BOT BY : @Arpitbotmovies
 
 ⏰Result Shown in: {remaining_seconds} <i>seconds</i> 🔥
 
