@@ -72,9 +72,9 @@ OWNER_USERNAME = environ.get('OWNER_USERNAME', 'Arpitbotmovies') # owner usernam
 
 # Links
 GRP_LNK = environ.get('GRP_LNK', 'https://t.me/+auBaIAnB4R84YzJl')
-CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/FilmCity_Official')
+CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/Film_CityOfficial')
 TUTORIAL = environ.get('TUTORIAL', 'https://t.me/How_To_Open_Linkl')
-SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'FilmCity_Official') # Support Chat Link Without https:// or @
+SUPPORT_CHAT = environ.get('SUPPORT_CHAT', '+auBaIAnB4R84YzJl') # Support Chat Link Without https:// or @
 
 # True Or False
 AI_SPELL_CHECK = bool(environ.get('AI_SPELL_CHECK', True))
